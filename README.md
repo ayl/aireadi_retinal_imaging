@@ -275,6 +275,11 @@ The current tests cover argument parsing, file filtering, SOP-class dispatch,
 output naming, compliance rule evaluation, DICOM metadata extraction, Excel
 report generation, nested Excel helpers, and the main entry point.
 
+## License
+
+This project is licensed under the BSD 2-Clause License. See `LICENSE` for
+details.
+
 ## Known Limitations
 
 - The compliance report workflow is packaged and exposed as
