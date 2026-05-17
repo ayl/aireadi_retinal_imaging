@@ -13,12 +13,25 @@ available for direct use.
 ```text
 aireadi_retinal_imaging/
   main/
-    create_compliance_report.py   # DICOM compliance report CLI
+    create_compliance_report.py   # Backward-compatible compliance CLI wrapper
     process_*.py                  # Device-specific processing pipelines
-  year_3/
-    compliance_report.py          # Excel report generation
-    compliance_rules.py           # Ophthalmic DICOM compliance rule sets
-    imaging_*                     # Device conversion, organization, metadata helpers
+  cli/
+    compliance_report.py          # Installable compliance CLI implementation
+  compliance/
+    report.py                     # Excel report generation
+    rules.py                      # Ophthalmic DICOM compliance rule sets
+    nested_excel.py               # Nested sequence report workbooks
+  dicom/
+    classification.py             # DICOM classification rules
+    standards.py                  # Shared device-domain base classes
+    utils.py                      # Shared file and DICOM helpers
+  devices/
+    cirrus/
+    eidon/
+    flio/
+    optomed/
+    spectralis/
+    topcon/
   notebooks/
     main_processing.ipynb
     post_processing.ipynb
@@ -178,12 +191,8 @@ folder structure, and extract metadata. They do not run the compliance report
 CLI automatically.
 
 These processing scripts have not yet been converted to packaged console
-entry points. Several still contain local development path assumptions, so use
-`PYTHONPATH` when running them directly from this checkout:
-
-```bash
-export PYTHONPATH="$PWD/year_3"
-```
+entry points, but their implementation modules now live under
+`aireadi_retinal_imaging.devices` and import through the package namespace.
 
 All device processing scripts use the same argument shape:
 
@@ -240,8 +249,6 @@ aireadi-compliance-report \
 ### Process raw device data, then report on converted DICOM files
 
 ```bash
-export PYTHONPATH="$PWD/year_3"
-
 python main/process_topcon.py \
   --input-folder "/path/to/raw/topcon/export" \
   --output-folder "/path/to/processed/topcon"
@@ -270,8 +277,6 @@ point.
 - The compliance report workflow is packaged and exposed as
   `aireadi-compliance-report`; the device processing pipelines are still
   legacy direct-run scripts.
-- Several device processing scripts rely on local path assumptions from the
-  original development environment; set `PYTHONPATH` as shown above.
 - The compliance report CLI accepts folders only. Single-file use requires
   putting the file in a folder.
 - Compliance reporting is designed for supported ophthalmic DICOM SOP classes,

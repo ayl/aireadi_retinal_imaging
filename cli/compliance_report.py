@@ -11,11 +11,7 @@ from typing import Iterable, Sequence
 import pydicom
 from pydicom.datadict import DicomDictionary, keyword_dict
 
-from aireadi_retinal_imaging.year_3 import (
-    compliance_report,
-    compliance_rules,
-    nested_structure_excel,
-)
+from aireadi_retinal_imaging.compliance import nested_excel, report, rules
 
 
 OPHTHALMIC_PHOTOGRAPHY_8_BIT = "1.2.840.10008.5.1.4.1.1.77.1.5.1"
@@ -43,7 +39,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
     ReportSpec(
         name="Ophthalmic Photography 8 Bit Image",
         sop_class_uids=frozenset({OPHTHALMIC_PHOTOGRAPHY_8_BIT}),
-        rules=compliance_rules.cfp_ir_rule,
+        rules=rules.cfp_ir_rule,
         report_suffix="eval_op",
         nested_suffix="eval_op_nested",
         nested_tags=(
@@ -60,7 +56,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
     ReportSpec(
         name="Ophthalmic Tomography Image",
         sop_class_uids=frozenset({OPHTHALMIC_TOMOGRAPHY_IMAGE}),
-        rules=compliance_rules.oct_b_rule,
+        rules=rules.oct_b_rule,
         report_suffix="eval_oct",
         nested_suffix="eval_oct_nested",
         nested_tags=(
@@ -77,7 +73,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
     ReportSpec(
         name="Ophthalmic Tomography Volume",
         sop_class_uids=frozenset({OPHTHALMIC_TOMOGRAPHY_VOLUME}),
-        rules=compliance_rules.volume_analysis_rule,
+        rules=rules.volume_analysis_rule,
         report_suffix="eval_volume_analysis",
         nested_suffix="eval_volume_analysis_nested",
         nested_tags=(
@@ -99,7 +95,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
                 SURFACE_SCAN_MESH,
             }
         ),
-        rules=compliance_rules.heightmap_rule,
+        rules=rules.heightmap_rule,
         report_suffix="eval_heightmap_segmentation",
         nested_suffix="eval_heightmap_segmentation_nested",
         nested_tags=(
@@ -114,7 +110,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
     ReportSpec(
         name="En Face",
         sop_class_uids=frozenset({OPHTHALMIC_OCT_EN_FACE}),
-        rules=compliance_rules.octa_enface_rule,
+        rules=rules.octa_enface_rule,
         report_suffix="eval_en_face",
         nested_suffix="eval_enface_nested",
         nested_tags=(
@@ -135,7 +131,7 @@ REPORT_SPECS: tuple[ReportSpec, ...] = (
     ReportSpec(
         name="Ophthalmic Photography 16 Bit Image",
         sop_class_uids=frozenset({OPHTHALMIC_PHOTOGRAPHY_16_BIT}),
-        rules=compliance_rules.cfp_ir_16_rule,
+        rules=rules.cfp_ir_16_rule,
         report_suffix="op_16",
         nested_suffix="op_16_nested",
         nested_tags=(
@@ -239,12 +235,12 @@ def create_reports_for_specs(
         if not files:
             continue
 
-        compliance_report.create_report(
+        report.create_report(
             spec.rules,
             files,
             str(output_path / f"{device_protocol}_{spec.report_suffix}.xlsx"),
         )
-        nested_structure_excel.multi_create_excelsheet_nested_structure(
+        nested_excel.multi_create_excelsheet_nested_structure(
             files,
             list(spec.nested_tags),
             str(output_path / f"{device_protocol}_{spec.nested_suffix}.xlsx"),

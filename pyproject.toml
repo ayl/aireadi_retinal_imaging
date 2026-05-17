@@ -34,19 +34,35 @@ aireadi-compliance-report = "aireadi_retinal_imaging.cli.compliance_report:main"
 packages = [
     "aireadi_retinal_imaging",
     "aireadi_retinal_imaging.cli",
+    "aireadi_retinal_imaging.compliance",
+    "aireadi_retinal_imaging.devices",
+    "aireadi_retinal_imaging.devices.cirrus",
+    "aireadi_retinal_imaging.devices.eidon",
+    "aireadi_retinal_imaging.devices.flio",
+    "aireadi_retinal_imaging.devices.optomed",
+    "aireadi_retinal_imaging.devices.spectralis",
+    "aireadi_retinal_imaging.devices.topcon",
+    "aireadi_retinal_imaging.dicom",
     "aireadi_retinal_imaging.main",
-    "aireadi_retinal_imaging.year_3",
 ]
 include-package-data = true
 
 [tool.setuptools.package-dir]
 aireadi_retinal_imaging = "."
 "aireadi_retinal_imaging.cli" = "cli"
+"aireadi_retinal_imaging.compliance" = "compliance"
+"aireadi_retinal_imaging.devices" = "devices"
+"aireadi_retinal_imaging.devices.cirrus" = "devices/cirrus"
+"aireadi_retinal_imaging.devices.eidon" = "devices/eidon"
+"aireadi_retinal_imaging.devices.flio" = "devices/flio"
+"aireadi_retinal_imaging.devices.optomed" = "devices/optomed"
+"aireadi_retinal_imaging.devices.spectralis" = "devices/spectralis"
+"aireadi_retinal_imaging.devices.topcon" = "devices/topcon"
+"aireadi_retinal_imaging.dicom" = "dicom"
 "aireadi_retinal_imaging.main" = "main"
-"aireadi_retinal_imaging.year_3" = "year_3"
 
 [tool.setuptools.package-data]
-"aireadi_retinal_imaging.year_3" = ["*.json"]
+"aireadi_retinal_imaging.devices.flio" = ["*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

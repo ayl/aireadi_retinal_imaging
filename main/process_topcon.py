@@ -2,18 +2,13 @@ import argparse
 import csv
 import os
 import shutil
-import sys
 from datetime import datetime
 
 from tqdm import tqdm
 
-# This line is specific to your local machine's setup.
-# It tells Python where to find your custom modules.
-sys.path.append("/Users/nayoonkim/pipeline_imaging/aireadi_retinal_imaging/year_3")
-import imaging_utils
-# Now that the path is added, you can import your custom modules
+from aireadi_retinal_imaging.dicom import utils as imaging_utils
 import pydicom
-from imaging_maestro2_triton_root import Maestro2_Triton
+from aireadi_retinal_imaging.devices.topcon.root import Maestro2_Triton
 from pydicom.datadict import DicomDictionary, keyword_dict
 from pydicom.dataset import Dataset
 

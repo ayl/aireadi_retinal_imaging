@@ -2,7 +2,18 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
+from aireadi_retinal_imaging.compliance import nested_excel, report, rules
 from aireadi_retinal_imaging.cli import compliance_report as cli
+from aireadi_retinal_imaging.dicom import classification, standards, utils
+
+
+def test_new_package_layout_imports_core_modules():
+    assert report is not None
+    assert rules is not None
+    assert nested_excel is not None
+    assert classification is not None
+    assert standards is not None
+    assert utils is not None
 
 
 def test_parser_accepts_three_positional_arguments():
@@ -65,9 +76,9 @@ def test_sort_them_by_sop_class_dispatches_reports_by_sop_uid(tmp_path, monkeypa
         nested_report_calls.append((files, tags, output_file))
 
     monkeypatch.setattr(cli.pydicom, "dcmread", fake_dcmread)
-    monkeypatch.setattr(cli.compliance_report, "create_report", fake_create_report)
+    monkeypatch.setattr(cli.report, "create_report", fake_create_report)
     monkeypatch.setattr(
-        cli.nested_structure_excel,
+        cli.nested_excel,
         "multi_create_excelsheet_nested_structure",
         fake_nested_report,
     )
