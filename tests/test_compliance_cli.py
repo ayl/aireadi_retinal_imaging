@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from types import SimpleNamespace
-
 from aireadi_retinal_imaging.compliance import nested_excel, report, rules
 from aireadi_retinal_imaging.cli import compliance_report as cli
 from aireadi_retinal_imaging.dicom import classification, standards, utils
+from tests.fixtures import write_minimal_dicom
 
 
 def test_new_package_layout_imports_core_modules():
@@ -50,21 +49,15 @@ def test_sort_them_by_sop_class_dispatches_reports_by_sop_uid(tmp_path, monkeypa
     output_folder = tmp_path / "output"
     input_folder.mkdir()
 
-    oct_file = input_folder / "2.1.dcm"
-    oct_file.write_text("not read in this test")
-    op_file = input_folder / "1.1.dcm"
-    op_file.write_text("not read in this test")
-    unsupported_file = input_folder / "3.1.dcm"
-    unsupported_file.write_text("not read in this test")
-
-    sop_by_path = {
-        str(oct_file): cli.OPHTHALMIC_TOMOGRAPHY_IMAGE,
-        str(op_file): cli.OPHTHALMIC_PHOTOGRAPHY_8_BIT,
-        str(unsupported_file): "1.2.3.unsupported",
-    }
-
-    def fake_dcmread(file_path):
-        return SimpleNamespace(SOPClassUID=sop_by_path[str(file_path)])
+    oct_file = write_minimal_dicom(
+        input_folder / "2.1.dcm", sop_class_uid=cli.OPHTHALMIC_TOMOGRAPHY_IMAGE
+    )
+    op_file = write_minimal_dicom(
+        input_folder / "1.1.dcm", sop_class_uid=cli.OPHTHALMIC_PHOTOGRAPHY_8_BIT
+    )
+    unsupported_file = write_minimal_dicom(
+        input_folder / "3.1.dcm", sop_class_uid="1.2.3"
+    )
 
     create_report_calls = []
     nested_report_calls = []
@@ -75,7 +68,6 @@ def test_sort_them_by_sop_class_dispatches_reports_by_sop_uid(tmp_path, monkeypa
     def fake_nested_report(files, tags, output_file):
         nested_report_calls.append((files, tags, output_file))
 
-    monkeypatch.setattr(cli.pydicom, "dcmread", fake_dcmread)
     monkeypatch.setattr(cli.report, "create_report", fake_create_report)
     monkeypatch.setattr(
         cli.nested_excel,

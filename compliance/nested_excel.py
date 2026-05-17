@@ -2,6 +2,12 @@ import pydicom
 import xlsxwriter
 
 
+def is_dicom_tag_key(value):
+    return isinstance(value, str) and len(value) == 8 and all(
+        char in "0123456789ABCDEFabcdef" for char in value
+    )
+
+
 class DicomEntry:
     """
     A class representing a single DICOM entry.
@@ -101,7 +107,7 @@ def process_tags(tags, dicom, nesting_level, output_lists):
             else:
                 nested_output = []
                 for item in value:
-                    keys_list = list(item.keys())
+                    keys_list = [key for key in item.keys() if is_dicom_tag_key(key)]
                     process_tags(
                         keys_list, item, nesting_level + 1, output_lists
                     )  # Increment nesting level

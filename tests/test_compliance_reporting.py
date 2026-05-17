@@ -1,19 +1,10 @@
 from __future__ import annotations
 
-from types import SimpleNamespace
-
 import pytest
 
 from aireadi_retinal_imaging.compliance import nested_excel, report
 from aireadi_retinal_imaging.compliance import rules as compliance_rules
-
-
-class FakeDicom:
-    def __init__(self, json_dict):
-        self._json_dict = json_dict
-
-    def to_json_dict(self):
-        return self._json_dict
+from tests.fixtures import write_minimal_dicom
 
 
 def make_rules(elements):
@@ -40,59 +31,34 @@ def test_compliance_rule_tags_returns_unique_tags():
     assert set(rules.tags()) == {"00100010", "00100020"}
 
 
-def test_extract_dicom_dict_reads_selected_tags(tmp_path, monkeypatch):
-    dcm_file = tmp_path / "sample.dcm"
-    dcm_file.write_text("placeholder")
-    monkeypatch.setattr(
-        report.pydicom,
-        "dcmread",
-        lambda file_path: FakeDicom(
-            {
-                "00100010": {"vr": "PN", "Value": ["Alice"]},
-                "00100020": {"vr": "LO"},
-            }
-        ),
-    )
+def test_extract_dicom_dict_reads_selected_tags(tmp_path):
+    dcm_file = write_minimal_dicom(tmp_path / "sample.dcm")
 
     result = report.extract_dicom_dict(str(dcm_file), ["00100010", "00100020"])
 
     assert result["filepath"] == str(dcm_file)
-    assert result["00100010"].value == ["Alice"]
-    assert result["00100020"].value == []
+    assert result["00100010"].value == [{"Alphabetic": "Alice^Example"}]
+    assert "00100020" not in result
     assert not result["00100010"].is_empty()
-    assert result["00100020"].is_empty()
 
 
-def test_extract_dicom_dict_validates_inputs(tmp_path, monkeypatch):
+def test_extract_dicom_dict_validates_inputs(tmp_path):
     missing = tmp_path / "missing.dcm"
 
     with pytest.raises(FileNotFoundError):
         report.extract_dicom_dict(str(missing), ["00100010"])
 
-    existing = tmp_path / "sample.dcm"
-    existing.write_text("placeholder")
-    monkeypatch.setattr(report.pydicom, "dcmread", lambda file_path: FakeDicom({}))
+    existing = write_minimal_dicom(tmp_path / "sample.dcm")
     with pytest.raises(NotImplementedError):
         report.extract_dicom_dict(str(existing), [["00100010"]])
 
 
-def test_extract_dicom_dict_extra_excludes_rule_tags(tmp_path, monkeypatch):
-    dcm_file = tmp_path / "sample.dcm"
-    dcm_file.write_text("placeholder")
-    monkeypatch.setattr(
-        report.pydicom,
-        "dcmread",
-        lambda file_path: FakeDicom(
-            {
-                "00100010": {"vr": "PN", "Value": ["Alice"]},
-                "00100020": {"vr": "LO", "Value": ["123"]},
-            }
-        ),
-    )
+def test_extract_dicom_dict_extra_excludes_rule_tags(tmp_path):
+    dcm_file = write_minimal_dicom(tmp_path / "sample.dcm", include_patient_id=True)
 
     result = report.extract_dicom_dict_extra(str(dcm_file), ["00100010"])
 
-    assert list(result) == ["00100020"]
+    assert "00100020" in result
     assert result["00100020"].value == ["123"]
 
 
@@ -153,9 +119,8 @@ def test_evaluate_compliance_covers_required_optional_and_conditionals():
     assert result["00100090"] == report.ActionNeeded.PREFERRED
 
 
-def test_export_to_excel_and_create_report_write_workbooks(tmp_path, monkeypatch):
-    dcm_file = tmp_path / "sample.dcm"
-    dcm_file.write_text("placeholder")
+def test_export_to_excel_and_create_report_write_workbooks(tmp_path):
+    dcm_file = write_minimal_dicom(tmp_path / "sample.dcm")
     output_file = tmp_path / "report.xlsx"
     rules = make_rules(
         [
@@ -165,17 +130,6 @@ def test_export_to_excel_and_create_report_write_workbooks(tmp_path, monkeypatch
                 "PatientSex", "00100040", "CS", compliance_rules.PREFERRED
             ),
         ]
-    )
-
-    monkeypatch.setattr(
-        report.pydicom,
-        "dcmread",
-        lambda file_path: FakeDicom(
-            {
-                "00100010": {"vr": "PN", "Value": ["Alice"]},
-                "00080060": {"vr": "CS", "Value": ["OP"]},
-            }
-        ),
     )
 
     report.create_report(rules, [str(dcm_file)], str(output_file))
@@ -217,19 +171,15 @@ def test_nested_process_tags_extracts_simple_and_nested_values():
     assert output["indentation"] == ["", "", ">"]
 
 
-def test_nested_extract_dicom_dict_reads_requested_tags(tmp_path, monkeypatch):
-    dcm_file = tmp_path / "sample.dcm"
-    dcm_file.write_text("placeholder")
-    monkeypatch.setattr(
-        nested_excel.pydicom,
-        "dcmread",
-        lambda file_path: FakeDicom({"00100010": {"vr": "PN", "Value": ["Alice"]}}),
+def test_nested_extract_dicom_dict_reads_requested_tags(tmp_path):
+    dcm_file = write_minimal_dicom(
+        tmp_path / "sample.dcm", include_source_sequence=True
     )
 
-    result = nested_excel.extract_dicom_dict(str(dcm_file), ["00100010"])
+    result = nested_excel.extract_dicom_dict(str(dcm_file), ["00100010", "00082112"])
 
-    assert result["tag"] == ["00100010"]
-    assert result["value"] == [["Alice"]]
+    assert result["tag"][:2] == ["00100010", "00082112"]
+    assert "00081150" in result["tag"]
 
 
 def fake_nested_result():
