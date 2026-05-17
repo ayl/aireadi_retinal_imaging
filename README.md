@@ -32,9 +32,6 @@ aireadi_retinal_imaging/
     optomed/
     spectralis/
     topcon/
-  notebooks/
-    main_processing.ipynb
-    post_processing.ipynb
   environment_aireadi_2025.yml    # Conda environment definition
 ```
 
@@ -268,9 +265,15 @@ python -m pip install -e ".[test]"
 python -m pytest
 ```
 
-The current tests focus on the packaged compliance report CLI: argument
-parsing, file filtering, SOP-class dispatch, output naming, and the main entry
-point.
+The current coverage gate is intentionally scoped to the packaged CLI and
+compliance-reporting surface. It requires at least 95% coverage for:
+
+- `aireadi_retinal_imaging.cli`
+- `aireadi_retinal_imaging.compliance`
+
+The current tests cover argument parsing, file filtering, SOP-class dispatch,
+output naming, compliance rule evaluation, DICOM metadata extraction, Excel
+report generation, nested Excel helpers, and the main entry point.
 
 ## Known Limitations
 

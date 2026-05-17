@@ -25,6 +25,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pytest>=7.4",
+    "pytest-cov>=5.0",
 ]
 
 [project.scripts]
@@ -67,3 +68,15 @@ aireadi_retinal_imaging = "."
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = [".."]
+addopts = [
+    "--cov=aireadi_retinal_imaging.cli",
+    "--cov=aireadi_retinal_imaging.compliance",
+    "--cov-report=term-missing",
+    "--cov-fail-under=95",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
