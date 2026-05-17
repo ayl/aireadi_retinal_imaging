@@ -2,8 +2,8 @@ import os
 import shutil
 
 import pydicom
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 
 
 def filter_cirrus_files(folder, output):

@@ -6,10 +6,10 @@ from datetime import datetime
 
 from tqdm import tqdm
 
-from aireadi_retinal_imaging.devices.cirrus import utils as cirrus_utils
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.devices.cirrus import utils as cirrus_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 import pydicom
-from aireadi_retinal_imaging.devices.cirrus.root import Cirrus
+from ophthalmic_dicom_compliance.devices.cirrus.root import Cirrus
 from pydicom.datadict import DicomDictionary, keyword_dict
 from pydicom.dataset import Dataset
 

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from aireadi_retinal_imaging.compliance import nested_excel, report, rules
-from aireadi_retinal_imaging.cli import compliance_report as cli
-from aireadi_retinal_imaging.dicom import classification, standards, utils
+from ophthalmic_dicom_compliance.compliance import nested_excel, report, rules
+from ophthalmic_dicom_compliance.cli import compliance_report as cli
+from ophthalmic_dicom_compliance.dicom import classification, standards, utils
 from tests.fixtures import write_minimal_dicom
 
 

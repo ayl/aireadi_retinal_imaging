@@ -1,6 +1,6 @@
 import os
 
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 
 from . import enface_converter as cirrus_enface_converter
 from . import enface_structural_converter as cirrus_enface_structural_converter

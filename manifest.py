@@ -4,14 +4,14 @@ import re
 
 import pandas as pd
 import pydicom
-from aireadi_retinal_imaging.devices.cirrus import metadata as imaging_cirrus_metadata
-from aireadi_retinal_imaging.devices.eidon import metadata as imaging_eidon_retinal_photography_metadata
-from aireadi_retinal_imaging.devices.flio import metadata as imaging_flio_metadata
-from aireadi_retinal_imaging.devices.optomed import metadata as imaging_optomed_retinal_photography_metadata
-from aireadi_retinal_imaging.devices.spectralis import metadata as imaging_spectralis_metadata
-from aireadi_retinal_imaging.devices.topcon import metadata as imaging_maestro2_triton_metadata
-from aireadi_retinal_imaging.dicom import organize as organize_utils
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.devices.cirrus import metadata as imaging_cirrus_metadata
+from ophthalmic_dicom_compliance.devices.eidon import metadata as imaging_eidon_retinal_photography_metadata
+from ophthalmic_dicom_compliance.devices.flio import metadata as imaging_flio_metadata
+from ophthalmic_dicom_compliance.devices.optomed import metadata as imaging_optomed_retinal_photography_metadata
+from ophthalmic_dicom_compliance.devices.spectralis import metadata as imaging_spectralis_metadata
+from ophthalmic_dicom_compliance.devices.topcon import metadata as imaging_maestro2_triton_metadata
+from ophthalmic_dicom_compliance.dicom import organize as organize_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 from tqdm import tqdm
 
 

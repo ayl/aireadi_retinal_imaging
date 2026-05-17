@@ -1,4 +1,4 @@
-from aireadi_retinal_imaging.dicom.standards import DataDomain
+from ophthalmic_dicom_compliance.dicom.standards import DataDomain
 
 from . import converter as eidon_conv
 from . import metadata as eidon_meta

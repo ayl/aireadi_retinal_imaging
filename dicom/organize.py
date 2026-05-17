@@ -7,7 +7,7 @@ from tqdm import tqdm
 import json
 import re
 
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 
 
 def get_topcon_info (base_path):

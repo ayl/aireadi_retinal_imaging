@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aireadi-retinal-imaging"
+name = "ophthalmic-dicom-compliance"
 version = "0.1.0"
-description = "Retinal imaging DICOM conversion and ophthalmic compliance reporting tools."
+description = "Ophthalmic DICOM compliance report generator."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
@@ -36,48 +36,49 @@ test = [
 ]
 
 [project.scripts]
-aireadi-compliance-report = "aireadi_retinal_imaging.cli.compliance_report:main"
+ophthalmic-dicom-report = "ophthalmic_dicom_compliance.cli.compliance_report:main"
+aireadi-compliance-report = "ophthalmic_dicom_compliance.console:main"
 
 [tool.setuptools]
 packages = [
-    "aireadi_retinal_imaging",
-    "aireadi_retinal_imaging.cli",
-    "aireadi_retinal_imaging.compliance",
-    "aireadi_retinal_imaging.devices",
-    "aireadi_retinal_imaging.devices.cirrus",
-    "aireadi_retinal_imaging.devices.eidon",
-    "aireadi_retinal_imaging.devices.flio",
-    "aireadi_retinal_imaging.devices.optomed",
-    "aireadi_retinal_imaging.devices.spectralis",
-    "aireadi_retinal_imaging.devices.topcon",
-    "aireadi_retinal_imaging.dicom",
-    "aireadi_retinal_imaging.main",
+    "ophthalmic_dicom_compliance",
+    "ophthalmic_dicom_compliance.cli",
+    "ophthalmic_dicom_compliance.compliance",
+    "ophthalmic_dicom_compliance.devices",
+    "ophthalmic_dicom_compliance.devices.cirrus",
+    "ophthalmic_dicom_compliance.devices.eidon",
+    "ophthalmic_dicom_compliance.devices.flio",
+    "ophthalmic_dicom_compliance.devices.optomed",
+    "ophthalmic_dicom_compliance.devices.spectralis",
+    "ophthalmic_dicom_compliance.devices.topcon",
+    "ophthalmic_dicom_compliance.dicom",
+    "ophthalmic_dicom_compliance.main",
 ]
 include-package-data = true
 
 [tool.setuptools.package-dir]
-aireadi_retinal_imaging = "."
-"aireadi_retinal_imaging.cli" = "cli"
-"aireadi_retinal_imaging.compliance" = "compliance"
-"aireadi_retinal_imaging.devices" = "devices"
-"aireadi_retinal_imaging.devices.cirrus" = "devices/cirrus"
-"aireadi_retinal_imaging.devices.eidon" = "devices/eidon"
-"aireadi_retinal_imaging.devices.flio" = "devices/flio"
-"aireadi_retinal_imaging.devices.optomed" = "devices/optomed"
-"aireadi_retinal_imaging.devices.spectralis" = "devices/spectralis"
-"aireadi_retinal_imaging.devices.topcon" = "devices/topcon"
-"aireadi_retinal_imaging.dicom" = "dicom"
-"aireadi_retinal_imaging.main" = "main"
+ophthalmic_dicom_compliance = "."
+"ophthalmic_dicom_compliance.cli" = "cli"
+"ophthalmic_dicom_compliance.compliance" = "compliance"
+"ophthalmic_dicom_compliance.devices" = "devices"
+"ophthalmic_dicom_compliance.devices.cirrus" = "devices/cirrus"
+"ophthalmic_dicom_compliance.devices.eidon" = "devices/eidon"
+"ophthalmic_dicom_compliance.devices.flio" = "devices/flio"
+"ophthalmic_dicom_compliance.devices.optomed" = "devices/optomed"
+"ophthalmic_dicom_compliance.devices.spectralis" = "devices/spectralis"
+"ophthalmic_dicom_compliance.devices.topcon" = "devices/topcon"
+"ophthalmic_dicom_compliance.dicom" = "dicom"
+"ophthalmic_dicom_compliance.main" = "main"
 
 [tool.setuptools.package-data]
-"aireadi_retinal_imaging.devices.flio" = ["*.json"]
+"ophthalmic_dicom_compliance.devices.flio" = ["*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = [".."]
 addopts = [
-    "--cov=aireadi_retinal_imaging.cli",
-    "--cov=aireadi_retinal_imaging.compliance",
+    "--cov=ophthalmic_dicom_compliance.cli",
+    "--cov=ophthalmic_dicom_compliance.compliance",
     "--cov-report=term-missing",
     "--cov-fail-under=95",
 ]

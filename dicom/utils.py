@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 import pydicom
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 from bs4 import BeautifulSoup
 
 

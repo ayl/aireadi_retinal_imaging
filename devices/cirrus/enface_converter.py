@@ -1,7 +1,7 @@
 import os
 
 import pydicom
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 
 from .enface_functional_groups import (
     derivation_algorithm_sequence, enface_volume_descriptor_sequence,

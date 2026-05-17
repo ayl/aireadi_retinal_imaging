@@ -11,7 +11,7 @@ from typing import Iterable, Sequence
 import pydicom
 from pydicom.datadict import DicomDictionary, keyword_dict
 
-from aireadi_retinal_imaging.compliance import nested_excel, report, rules
+from ophthalmic_dicom_compliance.compliance import nested_excel, report, rules
 
 
 OPHTHALMIC_PHOTOGRAPHY_8_BIT = "1.2.840.10008.5.1.4.1.1.77.1.5.1"

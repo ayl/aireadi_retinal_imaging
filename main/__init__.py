@@ -1,1 +1,1 @@
-"""Compatibility script modules for aireadi_retinal_imaging."""
+"""Compatibility script modules for ophthalmic_dicom_compliance."""

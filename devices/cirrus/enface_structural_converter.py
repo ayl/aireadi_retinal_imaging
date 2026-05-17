@@ -8,7 +8,7 @@ from .enface_functional_groups import (
     ophthalmic_image_type_code_sequence,
     ophthalmic_frame_location_sequence,
 )
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 
 KEEP = 0
 BLANK = 1

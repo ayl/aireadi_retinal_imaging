@@ -6,9 +6,9 @@ from datetime import datetime
 
 from tqdm import tqdm
 
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 import pydicom
-from aireadi_retinal_imaging.devices.topcon.root import Maestro2_Triton
+from ophthalmic_dicom_compliance.devices.topcon.root import Maestro2_Triton
 from pydicom.datadict import DicomDictionary, keyword_dict
 from pydicom.dataset import Dataset
 

@@ -1,7 +1,7 @@
 import os
 
 import pydicom
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 from pydicom import dcmread, dcmwrite
 from .ppol_oct_functional_groups import (
     acquisition_device_type_code_sequence, anatomic_region_sequence,

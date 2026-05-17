@@ -1,1 +1,1 @@
-"""Command-line entry points for aireadi_retinal_imaging."""
+"""Command-line entry points for ophthalmic_dicom_compliance."""

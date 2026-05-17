@@ -1,8 +1,8 @@
-# aireadi_retinal_imaging
+# Ophthalmic DICOM Compliance Report Generator
 
-Utilities for organizing retinal imaging exports, converting them into
-structured DICOM files, extracting metadata, and generating Excel compliance
-reports for ophthalmic DICOM objects.
+Utilities for generating Excel compliance reports for ophthalmic DICOM objects.
+The package also retains legacy device-specific conversion and metadata
+helpers, but the primary supported interface is the compliance report CLI.
 
 The repository can be installed as a Python package and exposes a console
 entry point for compliance reporting. Legacy scripts under `main/` are still
@@ -11,7 +11,7 @@ available for direct use.
 ## Repository Layout
 
 ```text
-aireadi_retinal_imaging/
+ophthalmic_dicom_compliance/
   main/
     create_compliance_report.py   # Backward-compatible compliance CLI wrapper
     process_*.py                  # Device-specific processing pipelines
@@ -40,14 +40,13 @@ aireadi_retinal_imaging/
 Create the Conda environment from the provided file:
 
 ```bash
-conda env create -f aireadi_retinal_imaging/environment_aireadi_2025.yml
+conda env create -f environment_aireadi_2025.yml
 conda activate aireadi_2025
 ```
 
 Install the package from the repository root:
 
 ```bash
-cd aireadi_retinal_imaging
 python -m pip install -e ".[test]"
 ```
 
@@ -61,11 +60,11 @@ python -m pip install -e ".[test]" --no-build-isolation
 
 ## Compliance Report CLI
 
-After installation, use `aireadi-compliance-report` to take a folder of DICOM
+After installation, use `ophthalmic-dicom-report` to take a folder of DICOM
 files and generate Excel compliance reports.
 
 ```bash
-aireadi-compliance-report INPUT_FOLDER DEVICE_NAME OUTPUT_FOLDER
+ophthalmic-dicom-report INPUT_FOLDER DEVICE_NAME OUTPUT_FOLDER
 ```
 
 Arguments:
@@ -79,7 +78,7 @@ Arguments:
 Example:
 
 ```bash
-aireadi-compliance-report \
+ophthalmic-dicom-report \
   "/path/to/dicom/input" \
   "maestro2_check" \
   "/path/to/compliance/output"
@@ -88,13 +87,13 @@ aireadi-compliance-report \
 The script also supports:
 
 ```bash
-aireadi-compliance-report --help
+ophthalmic-dicom-report --help
 ```
 
 The legacy script path remains available:
 
 ```bash
-python -m aireadi_retinal_imaging.main.create_compliance_report \
+python -m ophthalmic_dicom_compliance.main.create_compliance_report \
   INPUT_FOLDER \
   DEVICE_NAME \
   OUTPUT_FOLDER
@@ -189,7 +188,7 @@ CLI automatically.
 
 These processing scripts have not yet been converted to packaged console
 entry points, but their implementation modules now live under
-`aireadi_retinal_imaging.devices` and import through the package namespace.
+`ophthalmic_dicom_compliance.devices` and import through the package namespace.
 
 All device processing scripts use the same argument shape:
 
@@ -237,7 +236,7 @@ point `--output-folder` at a directory containing files you need to keep.
 ### Generate a compliance report for existing DICOM files
 
 ```bash
-aireadi-compliance-report \
+ophthalmic-dicom-report \
   "/path/to/dicom/files" \
   "report_batch_name" \
   "/path/to/reports"
@@ -250,7 +249,7 @@ python main/process_topcon.py \
   --input-folder "/path/to/raw/topcon/export" \
   --output-folder "/path/to/processed/topcon"
 
-aireadi-compliance-report \
+ophthalmic-dicom-report \
   "/path/to/processed/topcon/step3_converted_dicom" \
   "topcon_batch" \
   "/path/to/processed/topcon/compliance_reports"
@@ -268,8 +267,8 @@ python -m pytest
 The current coverage gate is intentionally scoped to the packaged CLI and
 compliance-reporting surface. It requires at least 95% coverage for:
 
-- `aireadi_retinal_imaging.cli`
-- `aireadi_retinal_imaging.compliance`
+- `ophthalmic_dicom_compliance.cli`
+- `ophthalmic_dicom_compliance.compliance`
 
 The current tests cover argument parsing, file filtering, SOP-class dispatch,
 output naming, compliance rule evaluation, DICOM metadata extraction, Excel
@@ -283,7 +282,7 @@ details.
 ## Known Limitations
 
 - The compliance report workflow is packaged and exposed as
-  `aireadi-compliance-report`; the device processing pipelines are still
+  `ophthalmic-dicom-report`; the device processing pipelines are still
   legacy direct-run scripts.
 - The compliance report CLI accepts folders only. Single-file use requires
   putting the file in a folder.

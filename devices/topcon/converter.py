@@ -1,6 +1,6 @@
 import os
 
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 
 from . import enface_converter as maestro2_triton_enface_converter
 from . import heightmap_converter as maestro2_triton_heightmap_converter

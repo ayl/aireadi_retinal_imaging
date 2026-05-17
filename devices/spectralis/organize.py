@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 
 
 def filter_spectralis_files(file, outputfolder):

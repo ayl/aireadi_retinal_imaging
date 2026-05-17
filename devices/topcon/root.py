@@ -1,4 +1,4 @@
-from aireadi_retinal_imaging.dicom.standards import DataDomain
+from ophthalmic_dicom_compliance.dicom.standards import DataDomain
 
 from . import converter as maestro2_triton_conv
 from . import metadata as maestro2_triton_meta

@@ -1,6 +1,6 @@
 import os
 
-from aireadi_retinal_imaging.dicom import classification as imaging_classifying_rules
+from ophthalmic_dicom_compliance.dicom import classification as imaging_classifying_rules
 import pydicom
 
 KEEP = 0

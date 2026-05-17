@@ -5,7 +5,7 @@ import re
 import numpy as np
 import pydicom
 from bs4 import BeautifulSoup
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 from pydicom.dataset import Dataset, FileMetaDataset
 from pydicom.uid import ImplicitVRLittleEndian
 

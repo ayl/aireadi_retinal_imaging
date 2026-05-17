@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from aireadi_retinal_imaging.compliance import nested_excel, report
-from aireadi_retinal_imaging.compliance import rules as compliance_rules
+from ophthalmic_dicom_compliance.compliance import nested_excel, report
+from ophthalmic_dicom_compliance.compliance import rules as compliance_rules
 from tests.fixtures import write_minimal_dicom
 
 

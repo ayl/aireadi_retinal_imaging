@@ -6,9 +6,9 @@ from datetime import datetime
 
 from tqdm import tqdm
 
-from aireadi_retinal_imaging.dicom import utils as imaging_utils
+from ophthalmic_dicom_compliance.dicom import utils as imaging_utils
 import pydicom
-from aireadi_retinal_imaging.devices.spectralis.root import Spectralis
+from ophthalmic_dicom_compliance.devices.spectralis.root import Spectralis
 
 
 def write_log(log_file_path, input_path, status, error_message=""):
