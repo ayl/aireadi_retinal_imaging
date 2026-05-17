@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aireadi-retinal-imaging"
+version = "0.1.0"
+description = "Retinal imaging DICOM conversion and ophthalmic compliance reporting tools."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.13",
+    "matplotlib>=3.10",
+    "numpy>=2.0",
+    "pandas>=2.3",
+    "pillow>=11.0",
+    "pydicom>=3.0",
+    "pylibjpeg>=2.0",
+    "pylibjpeg-libjpeg>=2.3",
+    "pylibjpeg-openjpeg>=2.5",
+    "tqdm>=4.67",
+    "xlsxwriter>=3.2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4",
+]
+
+[project.scripts]
+aireadi-compliance-report = "aireadi_retinal_imaging.cli.compliance_report:main"
+
+[tool.setuptools]
+packages = [
+    "aireadi_retinal_imaging",
+    "aireadi_retinal_imaging.cli",
+    "aireadi_retinal_imaging.main",
+    "aireadi_retinal_imaging.year_3",
+]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+aireadi_retinal_imaging = "."
+"aireadi_retinal_imaging.cli" = "cli"
+"aireadi_retinal_imaging.main" = "main"
+"aireadi_retinal_imaging.year_3" = "year_3"
+
+[tool.setuptools.package-data]
+"aireadi_retinal_imaging.year_3" = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".."]

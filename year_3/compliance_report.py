@@ -1,6 +1,11 @@
 import enum
 import os
-import compliance_rules
+
+try:
+    from . import compliance_rules
+except ImportError:  # pragma: no cover - keeps legacy direct script usage working
+    import compliance_rules
+
 import pydicom
 import xlsxwriter
 
